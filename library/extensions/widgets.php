@@ -51,9 +51,9 @@ function thematic_after_title() {
  */
 class Thematic_Widget_Search extends WP_Widget {
 
-	function Thematic_Widget_Search() {
+	public function __construct() {
 		$widget_ops = array('classname' => 'widget_search', 'description' => __( 'A search form for your blog', 'thematic') );
-		$this->WP_Widget('search', __('Search', 'thematic'), $widget_ops);
+		parent::__construct('search', __('Search', 'thematic'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -96,9 +96,9 @@ class Thematic_Widget_Search extends WP_Widget {
  */
 class Thematic_Widget_Meta extends WP_Widget {
 
-	function Thematic_Widget_Meta() {
+	public function __construct() {
 		$widget_ops = array('classname' => 'widget_meta', 'description' => __( "Log in/out and admin", 'thematic') );
-		$this->WP_Widget('meta', __('Meta', 'thematic'), $widget_ops);
+		parent::__construct('meta', __('Meta', 'thematic'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -133,7 +133,7 @@ class Thematic_Widget_Meta extends WP_Widget {
 <?php
 	}
 }
-    
+
 /**
  * RSS links widget class
  *
@@ -141,9 +141,9 @@ class Thematic_Widget_Meta extends WP_Widget {
  */
 class Thematic_Widget_RSSlinks extends WP_Widget {
 
-	function Thematic_Widget_RSSlinks() {
+	public function __construct() {
 		$widget_ops = array( 'description' => __('Links to your posts and comments feed', 'thematic') );
-		$this->WP_Widget( 'rss-links', __('RSS Links', 'thematic'), $widget_ops);
+		parent::__construct( 'rss-links', __('RSS Links', 'thematic'), $widget_ops);
 	}
 
 	function widget($args, $instance) {

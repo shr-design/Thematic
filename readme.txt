@@ -2,8 +2,8 @@
 Contributors: iandstewart, chrisgossmann, emhr, helgatheviking, middlesister
 Tags: white, three-columns, two-columns, fixed-width, theme-options, left-sidebar, right-sidebar, threaded-comments, sticky-post, microformats
 Requires at least: 3.4
-Tested up to: 3.6
-Stable tag: 1.0.4
+Tested up to: 4.6.1
+Stable tag: 1.0.5
 
 The ultimate in SEO-ready themes, Thematic is a highly extensible, WordPress Theme Framework featuring 13 widget-ready areas, &amp; a whole lot more.
 
@@ -28,6 +28,9 @@ Features:
 * Options for multi-author blogs
 
 == Changelog ==
+= 1.0.5 =
+* Fixed: Updated Widget initialization to use __construct
+
 = 1.0.4 =
 * Removed: Backward compatibility for WP versions earlier than 3.4 specifically all calls to wp_get_theme() and get_theme_data()
 * Deprecated: thematic_legacy_help() & thematic_do_legacy_help_section()
