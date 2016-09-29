@@ -15,6 +15,11 @@
  */
 
 
+require 'theme-updates/theme-update-checker.php';
+$Thematic_ThemeUpdateChecker = new ThemeUpdateChecker(
+	'thematic', 'http://updates.whiteboardlabs.com/wp/?action=get_metadata&slug=thematic'
+);
+
 /**
  * Registers action hook: thematic_init 
  * 

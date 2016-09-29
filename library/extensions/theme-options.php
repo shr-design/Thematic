@@ -218,7 +218,7 @@ if (function_exists('childtheme_override_opt_page_help')) {
 }
 
 /**
- * Renders the them options page
+ * Renders the theme options page
  *
  * @since Thematic 1.0
  */
@@ -250,7 +250,7 @@ function thematic_do_opt_page() { ?>
 
 
 /**
- * Renders the "Main" settings section. This is left blank in Theamatic and outputs nothing
+ * Renders the "Main" settings section. This is left blank in Thematic and outputs nothing
  *
  * Filter: thematic_theme_opt_section_main
  *
@@ -302,7 +302,7 @@ function thematic_do_footer_opt() {
 
 
 /**
- * Renders Leagcy Options elements
+ * Renders Legacy Options elements
  *
  * @since Thematic 1.0
  */
@@ -315,7 +315,8 @@ function thematic_do_legacy_opt() {
         $theme = $frameworkData->display( 'Name', false );
  	?>
 
-	<label for="thm_legacy_opt"><?php printf( _x( '%s Theme Options have been upgraded to an improved format. Remove the legacy options from the database.', '{$current theme} Theme Options', 'thematic' ), $theme ); ?></label>
+	<label for="thm_legacy_opt"><?php printf( __( '%s Theme Options have been upgraded to an improved format. Remove the legacy options from the database.', '{$current theme} Theme Options', 'thematic' ), $theme ); ?></label>
+
 <?php
 }
 
@@ -351,19 +352,15 @@ if (function_exists('childtheme_override_validate_opt')) {
  	   }
  	   
  	   // Author Info CheckBox value either 1(yes) or 0(no)
- 	   if ( isset( $input['author_info'] ) ) {
- 	   	$output['author_info'] =  ( $input['author_info'] == 0 ? 0 : 1 );
- 	   }
+		$output['author_info'] = ( isset( $input['author_info'] ) ?  1 : 0 );
  	 
  	   // Footer Text sanitized allowing HTML and WP shortcodes
- 	   if ( isset( $input['footer_txt'] ) ) {
+		if ( isset( $input['footer_txt'] ) ) 
  	   	$output['footer_txt'] = wp_kses_post( $input['footer_txt'] ) ;	
- 	   }
  	   
  	   // Remove Legacy Options CheckBox value either 1(yes) or 0(no)
- 	   if ( isset( $input['del_legacy_opt'] ) ) {
- 	   	$output['del_legacy_opt'] = ( $input['del_legacy_opt'] == 0 ? 0 : 1 );
- 	   }
+		$output['del_legacy_opt'] = ( isset( $input['del_legacy_opt'] ) ?  1 : 0 );
+ 	   
  	   
  	   if ( 1 == $output['del_legacy_opt'] ) {
  	   	
