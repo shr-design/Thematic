@@ -91,10 +91,10 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 			// Check for post types without taxonomy inclusion
 			if ( isset( $single_post_type->taxonomy ) ) {
 			    if ( $tax = get_the_terms( $post->ID, get_post_taxonomies() ) ) {
-			    	foreach ( $tax as $term )   { 
+			    	foreach ( $tax as $term )   {
 			    		// Remove tags and categories from results
 			    		if  ( $term->taxonomy != 'post_tag' )	{
-			    			if  ( $term->taxonomy != 'category' )   { 
+			    			if  ( $term->taxonomy != 'category' )   {
 			    				$c[] = 's-tax-' . $term->taxonomy;
 			    				$c[] = 's-' . $term->taxonomy . '-' . $term->slug;
 			    			}
@@ -120,7 +120,7 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 				
 			// For posts with comments open or closed
 			if ( comments_open() ) {
-				$c[] = 's-comments-open';		
+				$c[] = 's-comments-open';
 			} else {
 				$c[] = 's-comments-closed';
 			}
@@ -138,7 +138,7 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 		
 			// For sticky posts
 			if ( is_sticky() )
-			   $c[] = 's-sticky';		
+			   $c[] = 's-sticky';
 			
 		}
 	
@@ -197,7 +197,7 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 				
 			// For pages with comments open or closed
 			if ( comments_open() ) {
-				$c[] = 'page-comments-open';		
+				$c[] = 'page-comments-open';
 			} else {
 				$c[] = 'page-comments-closed';
 			}
@@ -211,9 +211,9 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 		
 			// For password-protected pages
 			if ( $post->post_password )
-				$c[] = 'page-protected';			
+				$c[] = 'page-protected';
 				
-			// Checks to see if the page is using a template	
+			// Checks to see if the page is using a template
 			if ( is_page_template() & !is_page_template('default') )
 				$c[] = 'page-template page-template-' . str_replace( '.php', '-php', get_post_meta( $pageID, '_wp_page_template', true ) );
 			rewind_posts();
@@ -239,7 +239,7 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 	 // Paged classes; for page x > 1 classes of index and all post types etc.
 		if ( isset( $post ) && apply_filters( 'thematic_show_bc_pagex', TRUE ) ) {
 			if ( ( ( ( $page = $wp_query->get( 'paged' ) ) || ( $page = $wp_query->get('page') ) ) && $page > 1 ) ) {
-				// Thanks to Prentiss Riddle, twitter.com/pzriddle, for the security fix below. 
+				// Thanks to Prentiss Riddle, twitter.com/pzriddle, for the security fix below.
 				$page = intval( $page ); // Ensures that an integer (not some dangerous script) is passed for the variable
  					$c[] = 'paged-' . $page;
  				if ( thematic_is_custom_post_type() ) {
@@ -260,9 +260,9 @@ if ( function_exists( 'childtheme_override_body_class' ) )  {
 				        $c[] = 'author-paged-' . $page;
 					} elseif ( is_search() ) {
 				        $c[] = 'search-paged-' . $page;
- 				} 
+ 				}
  			// Paged classes; for page x = 1	For all post types
- 			} elseif ( preg_match( '/<!--nextpage(.*?)-->/', $post->post_content ) )  { 
+ 			} elseif ( preg_match( '/<!--nextpage(.*?)-->/', $post->post_content ) )  {
  				if ( thematic_is_custom_post_type() ) {
 				    	$c[] = str_replace( '_','-',$post->post_type ) . '-paged-1';
  				    } elseif (is_page()) {
@@ -286,9 +286,9 @@ function thematic_activate_body_classes() {
 		add_filter( 'body_class', 'thematic_body_class', 20 );
 	}
 	
-	// Add browser CSS class to the end (queuing through priority) of the body classes 
+	// Add browser CSS class to the end (queuing through priority) of the body classes
 	if ( apply_filters( 'thematic_show_bc_browser', TRUE ) ) {
-		add_filter( 'body_class', 'thematic_browser_class_names', 30 ); 
+		add_filter( 'body_class', 'thematic_browser_class_names', 30 );
 	}
 }
 add_action( 'init', 'thematic_activate_body_classes' );
@@ -318,16 +318,16 @@ function thematic_browser_class_names($classes) {
 	}
 		
 	// Checks browsers in this order: Chrome, Safari, Opera, MSIE, FF
-	if ( preg_match( "/Chrome/", $browser ) ) {
+	if ( preg_match( "/(Chrome|CriOS)/", $browser ) ) {
 		$classes[] = 'chrome';
 		
 		if ( ( current_theme_supports( 'minorbrowserversion_all' )) || ( current_theme_supports( 'minorbrowserversion_ch' ) ) ) {
-			preg_match( "/Chrome\/(\d+.\d+)/si", $browser, $matches );
+			preg_match( "/(Chrome|CriOS)\/(\d+.\d+)/si", $browser, $matches );
 			$ch_version = 'ch' . str_replace( '.', '-', $matches[1] );
 		} else {
-			preg_match( "/Chrome\/(\d+)/si", $browser, $matches );
+			preg_match( "/(Chrome|CriOS)\/(\d+)/si", $browser, $matches );
 			$ch_version = 'ch' . $matches[1];
-		}      
+		}
 		$classes[] = $ch_version;
 	
 	} elseif ( preg_match( "/Safari/", $browser ) ) {
@@ -340,7 +340,7 @@ function thematic_browser_class_names($classes) {
 			preg_match( "/Version\/(\d+)/si", $browser, $matches );
 			$sf_version = 'sf' . $matches[1];
 			
-		}     
+		}
 		$classes[] = $sf_version;
 				
 	} elseif ( preg_match( "/Opera/", $browser ) ) {
@@ -348,10 +348,10 @@ function thematic_browser_class_names($classes) {
 				
 		if ( ( current_theme_supports( 'minorbrowserversion_all' ) ) || ( current_theme_supports( 'minorbrowserversion_op' ) ) ) {
 			preg_match( "/Version\/(\d+.\d+)/si", $browser, $matches );
-			$op_version = 'op' . str_replace( '.', '-', $matches[1] );      
+			$op_version = 'op' . str_replace( '.', '-', $matches[1] );
 		} else {
 			preg_match( "/Version\/(\d+)/si", $browser, $matches );
-			$op_version = 'op' . $matches[1];      			
+			$op_version = 'op' . $matches[1];
 		}
 		$classes[] = $op_version;
 				
@@ -377,7 +377,7 @@ function thematic_browser_class_names($classes) {
 			} else {
 				preg_match( "/Firefox\/(\d+)/si", $browser, $matches );
 				$ff_version = 'ff' . $matches[1];
-			}      
+			}
 			$classes[] = $ff_version;
 				
 	} else {
@@ -432,7 +432,7 @@ if (function_exists('childtheme_override_post_class'))  {
 				foreach ( ( array ) get_the_terms( $post->ID, get_post_taxonomies() )  as $term  )   {
 					// Remove tags and categories from results
 					if  ( $term->taxonomy != 'category' )	{
-						if  ( $term->taxonomy != 'post_tag' )   { 
+						if  ( $term->taxonomy != 'post_tag' )   {
 							$c[] = 'p-tax-' . $term->taxonomy;
 							$c[] = 'p-' . $term->taxonomy . '-' . $term->slug;
 						}
@@ -464,7 +464,7 @@ if (function_exists('childtheme_override_post_class'))  {
 						
 		// For posts with comments open or closed
 		if ( comments_open() ) {
-			$c[] = 'comments-open';		
+			$c[] = 'comments-open';
 		} else {
 			$c[] = 'comments-closed';
 		}
@@ -492,7 +492,7 @@ if (function_exists('childtheme_override_post_class'))  {
 			$c[] = 'alt';
 	
 	    // Adds post slug class, prefixed by 'slug-'
-	    $c[] = 'slug-' . $post->post_name; 
+	    $c[] = 'slug-' . $post->post_name;
 	
 		// And tada!
 		return array_unique(apply_filters( 'thematic_post_class', $c )); // Available filter: thematic_post_class
@@ -511,14 +511,14 @@ add_action( 'init', 'thematic_activate_post_classes' );
 
 /**
  * Define the num val for 'alt' classes (in post DIV and comment LI)
- * 
+ *
  * @var int  (default value: 1)
  */
 $thematic_post_alt = 1;
 
 
 
-/** 
+/**
  * Adds classes to commment li's using the WordPress comment_class filter
  *
  * @since 1.0
