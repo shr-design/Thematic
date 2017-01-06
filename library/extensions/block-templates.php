@@ -132,7 +132,7 @@ if ( ! function_exists( 'thematic_block_template' ) ) {
 			if ( empty( $block ) ) {
 				continue;
 			}
-			$path = path_join( __DIR__, 'blocks' );
+			$path = path_join( get_stylesheet_directory(), 'blocks' );
 			$path = path_join( $path, $section );
 			$path = path_join( $path, $block );
 
