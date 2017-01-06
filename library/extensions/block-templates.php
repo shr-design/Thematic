@@ -12,10 +12,11 @@ if ( ! function_exists( 'thematic_block_template' ) ) {
 	 * Automagically include a block template based on the given section and current query result
 	 *
 	 * @param string $section The section (folder) to use when finding templates
+	 * @param string $content Optional. Any existing content that we need to reference (for example, inside a filter).
 	 *
 	 * @return boolean|mixed False if no template was loaded, any other value as returned from that template (if applicable).
 	 */
-	function thematic_block_template( $section ) {
+	function thematic_block_template( $section, $content = null ) {
 		if ( empty( $section ) ) {
 			return false;
 		}
@@ -126,7 +127,10 @@ if ( ! function_exists( 'thematic_block_template' ) ) {
 
 		$blocks[] = 'default.php';
 
-		print "\n<!-- block_inclusion({$section}):\nblocks=".print_r($blocks,true)." -->";
+		print "\n<!-- block_inclusion({$section})\n";
+		print "blocks=".substr( print_r( $blocks, true ), 7, -3 ) . "\n";
+		//print "------content------\n{$content}\n----end content----\n";
+		print "-->";
 
 		foreach ( $blocks as $block ) {
 			if ( empty( $block ) ) {
@@ -138,15 +142,25 @@ if ( ! function_exists( 'thematic_block_template' ) ) {
 
 			if ( file_exists( $path ) ) {
 				$r = include $path;
+				//print "<!-- \n------return------\n{$r}\n----end return----\n -->";
 				if ( $r === 1 ) {
+					if ( ! is_null( $content ) ) {
+						return $content;
+					}
 					return true;
 				}
 				if ( $r !== false ) {
 					return $r;
 				}
+				if ( ! is_null( $content ) ) {
+					return $content;
+				}
 			}
 		}
 
+		if ( ! is_null( $content ) ) {
+			return $content;
+		}
 		return false;
 	}
 }
