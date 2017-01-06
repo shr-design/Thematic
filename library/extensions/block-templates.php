@@ -28,63 +28,65 @@ if ( ! function_exists( 'thematic_block_template' ) ) {
 
 		if ( is_home() ) {
 			$blocks[] = 'home.php';
-			$blocks[] = 'front.php';
 		}
 
 		if ( is_front_page() ) {
 			$blocks[] = 'front_page.php';
-			$blocks[] = 'front.php';
 		}
 
+		if ( is_home() || is_front_page() ) {
+			$blocks[] = 'front.php';
+		}
+		
 		if ( is_page() ) {
 			$obj = get_queried_object();
-				
-			if ( ! empty( $obj->name ) ) {
-				$blocks[] = "page-{$obj->name}.php";
-			}
 				
 			if ( ! empty( $obj->ID ) ) {
 				$blocks[] = "page-{$obj->ID}.php";
 			}
 				
+			if ( ! empty( $obj->name ) ) {
+				$blocks[] = "page-{$obj->name}.php";
+			}
+			
 			$template = get_page_template_slug( get_queried_object_id() );
 			if ( ! empty( $template ) ) {
 				$template  = basename( $template );
 				if ( ! empty( $template ) ) {
-					$blocks[] = $template;
+					$blocks[] = 'page-' . $template;
 				}
 			}
 				
 			$blocks[] = 'page.php';
 		} else if ( is_attachment() ) {
 			$obj = get_queried_object();
-				
-			if ( ! empty( $obj->name ) ) {
-				$blocks[] = "page-{$obj->name}.php";
-			}
-				
+					
 			if ( ! empty( $obj->ID ) ) {
-				$blocks[] = "page-{$obj->ID}.php";
+				$blocks[] = "attach-{$obj->ID}.php";
+			}
+			
+			if ( ! empty( $obj->name ) ) {
+				$blocks[] = "attach-{$obj->name}.php";
 			}
 				
 			$template = get_page_template_slug( get_queried_object_id() );
 			if ( ! empty( $template ) ) {
 				$template  = basename( $template );
 				if ( ! empty( $template ) ) {
-					$blocks[] = $template;
+					$blocks[] = 'attach-' . $template;
 				}
 			}
 
-			$blocks[] = 'attachment.php';
+			$blocks[] = 'attach.php';
 		} else if ( is_single() ) {
 			$obj = get_queried_object();
 				
-			if ( ! empty( $obj->name ) ) {
-				$blocks[] = "page-{$obj->name}.php";
-			}
-				
 			if ( ! empty( $obj->ID ) ) {
-				$blocks[] = "page-{$obj->ID}.php";
+				$blocks[] = "single-{$obj->ID}.php";
+			}
+			
+			if ( ! empty( $obj->name ) ) {
+				$blocks[] = "single-{$obj->name}.php";
 			}
 				
 			if ( ! empty( $obj->post_type ) ) {
@@ -104,14 +106,12 @@ if ( ! function_exists( 'thematic_block_template' ) ) {
 			$obj = get_queried_object();
 				
 			if ( ! empty( $obj->slug ) ) {
-					
+				$blocks[] = "category-{$obj->term_id}.php";
 				$slug_decoded = urldecode( $obj->slug );
 				if ( $slug_decoded !== $obj->slug ) {
 					$blocks[] = "category-{$slug_decoded}.php";
 				}
-					
 				$blocks[] = "category-{$obj->slug}.php";
-				$blocks[] = "category-{$obj->term_id}.php";
 			}
 			$blocks[] = 'category.php';
 		} else if ( is_archive() ) {
