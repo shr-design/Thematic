@@ -9,7 +9,7 @@
  * enable activation of the child theme. <br>
  *
  * Reference:  {@link http://codex.wordpress.org/Child_Themes Codex: Child Themes}
- * 
+ *
  * @package Thematic
  * @subpackage ThemeInit
  */
@@ -21,8 +21,8 @@ $Thematic_ThemeUpdateChecker = new ThemeUpdateChecker(
 );
 
 /**
- * Registers action hook: thematic_init 
- * 
+ * Registers action hook: thematic_init
+ *
  * @since Thematic 1.0
  */
 function thematic_init() {
@@ -142,6 +142,9 @@ if ( function_exists('childtheme_override_theme_setup') ) {
 		// Load shortcodes
 		require_once ( THEMATIC_LIB . '/extensions/shortcodes.php' );
 
+		// Prepare block template functionality
+		require_once ( THEMATIC_LIB . '/extensions/block-templates.php' );
+		
 		// Adds filters for the description/meta content in archive templates
 		add_filter( 'archive_meta', 'wptexturize' );
 		add_filter( 'archive_meta', 'convert_smilies' );
@@ -170,7 +173,7 @@ add_action('after_setup_theme', 'thematic_theme_setup', 10);
 
 /**
  * Registers action hook: thematic_child_init
- * 
+ *
  * @since Thematic 1.0
  */
 function thematic_child_init() {
@@ -190,7 +193,7 @@ if ( function_exists('childtheme_override_init_navmenu') )  {
 } else {
 	/**
 	 * Register primary nav menu
-	 * 
+	 *
 	 * Override: childtheme_override_init_navmenu
 	 * Filter: thematic_primary_menu_id
 	 * Filter: thematic_primary_menu_name
